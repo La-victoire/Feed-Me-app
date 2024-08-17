@@ -28,7 +28,7 @@ function App() {
    e.preventDefault();
    if (searchQuery.trim() === "") {
      setNotFoundMessage("Please enter a search term.");
-     setMenuItems([]);
+     setmeal([]);
      return;
    }
 
@@ -36,7 +36,7 @@ function App() {
    setNotFoundMessage(""); 
 
    fetch(
-     `/https://feedme-api.onrender.com/meals/search/${encodeURIComponent(
+     `https://feedme-api.onrender.com/meals/search/${encodeURIComponent(
        searchQuery
      )}`
    )
@@ -47,7 +47,7 @@ function App() {
        return response.json();
      })
      .then((data) => {
-       setMenuItems(data);
+       setmeal(data);
        setLoading(false);
 
        if (data.length === 0) {
@@ -63,14 +63,14 @@ function App() {
 
   return (
     <>
-      <form onSubmit={searchMeals} className="">
+      <form onSubmit={searchMeals} className="text-center flex flex-col ">
         <input
           type="text"
           placeholder="Search for meals..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button type="submit">Search</button>
+        <button type="submit" className="border-gray-800 border-4">Search</button>
       </form>
 
       {loading ? (
@@ -93,7 +93,7 @@ function App() {
         </div>
       )}
 
-      <button>click me</button>
+     
     </>
   );
 }
