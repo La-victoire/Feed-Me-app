@@ -5,6 +5,9 @@ import { useEffect } from "react"
 
 function App() {
   const [meal, setmeal] = useState ([])
+   const [loading, setLoading] = useState(true);
+   const [searchQuery, setSearchQuery] = useState("");
+   const [notFoundMessage, setNotFoundMessage] = useState("");
 
   useEffect(()=>{
     const fetchmeal = async () => {
@@ -21,20 +24,78 @@ function App() {
     }
     fetchmeal();
   },[]);
-  
+ const searchMeals = (e) => {
+   e.preventDefault();
+   if (searchQuery.trim() === "") {
+     setNotFoundMessage("Please enter a search term.");
+     setMenuItems([]);
+     return;
+   }
+
+   setLoading(true);
+   setNotFoundMessage(""); 
+
+   fetch(
+     `/https://feedme-api.onrender.com/meals/search/${encodeURIComponent(
+       searchQuery
+     )}`
+   )
+     .then((response) => {
+       if (!response.ok) {
+         throw new Error("Network response was not ok");
+       }
+       return response.json();
+     })
+     .then((data) => {
+       setMenuItems(data);
+       setLoading(false);
+
+       if (data.length === 0) {
+         setNotFoundMessage("Meal not available, try finding something else.");
+       }
+     })
+     .catch((error) => {
+       console.error("There was an error searching the menu!", error);
+       setNotFoundMessage("Meal not available, try finding something else.");
+       setLoading(false);
+     });
+ };
+
   return (
     <>
-    <ul className="meal">
-      {meal.flatMap((food,index)=> (
-        <li key={index}>{food.name}</li>
-      ))}
-    </ul>
-    <button> 
-      click me 
-    </button>
+      <form onSubmit={searchMeals} className="">
+        <input
+          type="text"
+          placeholder="Search for meals..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
 
+      {loading ? (
+        <div className="text-center text-gray-700 text-lg font-medium animate-pulse">
+          Loading menu...
+        </div>
+      ) : (
+        <div>
+          {notFoundMessage ? (
+            <div className="text-center text-red-500 font-semibold mb-4">
+              {notFoundMessage}
+            </div>
+          ) : (
+            <ul className="meal">
+              {meal.flatMap((food, index) => (
+                <li key={index}>{food.name}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
+      <button>click me</button>
     </>
-  )
+  );
 }
 
 export default App
