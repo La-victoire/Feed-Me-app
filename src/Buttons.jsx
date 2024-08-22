@@ -56,6 +56,7 @@ function Buttons() {
         `https://feedme-api.onrender.com/meals/random`
       );
       const result = await response.json();
+      
       if (result && typeof result === "object") {
         setRandomFood(result);
       } else {
