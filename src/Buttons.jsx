@@ -52,7 +52,7 @@ function Buttons() {
     setIsLoading(true);
     try {
       const response = await fetch(
-        'https://feedme-api.onrender.com/meals/random'
+        `https://feedme-api.onrender.com/meals/random`
       );
       const result = await response.json();
 
