@@ -94,6 +94,7 @@ function Buttons() {
           </div>
         </div>
 
+
         {/* Cards Section */}
         <div>
           {isLoading && <p>Loading...</p>}
@@ -123,6 +124,7 @@ function Buttons() {
             </div>
           ))}
 
+        {/* maps ingredients */}
           {!isLoading && randomFood && (
             <div>
               <h3>Random Food:</h3>
