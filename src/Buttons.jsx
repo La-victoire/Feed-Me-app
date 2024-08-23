@@ -94,37 +94,34 @@ function Buttons() {
           </div>
         </div>
 
-
         {/* Cards Section */}
         <div>
           {isLoading && <p>Loading...</p>}
 
-          {!isLoading && filteredFood.length > 0 && filteredFood.map((item) => (
-            <div
-              key={item.id}
-            >
-              <div>
+          {!isLoading &&
+            filteredFood.length > 0 &&
+            filteredFood.map((item) => (
+              <div key={item.id}>
                 <div>
-                  <p className="p-5">
-                    {item.name}
-                  </p>
-                  <br />
-                  {item.ingredients && item.ingredients.length > 0 && (
-                    <p className="text-black font-semibold">
-                      <span className="font-bold">Ingredients:</span>
-                      <ul>
-                        {item.ingredients.map((ingredient, index) => (
-                          <li key={index}>{ingredient}</li>
-                        ))}
-                      </ul>
-                    </p>
-                  )}
+                  <div>
+                    <p className="p-5">{item.name}</p>
+                    <br />
+                    {item.ingredients && item.ingredients.length > 0 && (
+                      <p className="text-black font-semibold">
+                        <span className="font-bold">Ingredients:</span>
+                        <ul>
+                          {item.ingredients.map((ingredient, index) => (
+                            <li key={index}>{ingredient}</li>
+                          ))}
+                        </ul>
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
 
-        {/* maps ingredients */}
+          {/* maps ingredients */}
           {!isLoading && randomFood && (
             <div>
               <h3>Random Food:</h3>

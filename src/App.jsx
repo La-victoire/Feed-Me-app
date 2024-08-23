@@ -69,6 +69,8 @@ function App() {
           Search
         </button>
       </form>
+      
+      {/* for loading  */}
 
       {loading ? (
         <div className="text-center text-gray-700 text-lg font-medium animate-pulse">
