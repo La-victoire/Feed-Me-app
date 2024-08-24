@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
+
 function Buttons() {
+  
   const [randomFood, setRandomFood] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [food, setFood] = useState([]);
@@ -95,6 +97,7 @@ function Buttons() {
         </div>
 
         {/* Cards Section */}
+
         <div>
           {isLoading && <p>Loading...</p>}
 
