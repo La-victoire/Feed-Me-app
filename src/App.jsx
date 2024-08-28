@@ -1,29 +1,31 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom"; // Import Link
 
-function App() {
-  const [meal, setmeal] = useState([]);
+function Search() {
+  const [meal, setMeal] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [notFoundMessage, setNotFoundMessage] = useState("");
 
   useEffect(() => {
-    const fetchmeal = async () => {
+    const fetchMeal = async () => {
       try {
         const res = await fetch("https://feedme-api.onrender.com/");
         const data = await res.json();
-        setmeal(data);
+        setMeal(data);
       } catch (error) {
         console.log("error fetching data");
       }
     };
-    fetchmeal();
+    fetchMeal();
   }, []);
+
   const searchMeals = (e) => {
     e.preventDefault();
     if (searchQuery.trim() === "") {
       setNotFoundMessage("Please enter a search term.");
-      setmeal([]);
+      setMeal([]);
       return;
     }
 
@@ -42,7 +44,7 @@ function App() {
         return response.json();
       })
       .then((data) => {
-        setmeal(data);
+        setMeal(data);
         setLoading(false);
 
         if (data.length === 0) {
@@ -58,20 +60,21 @@ function App() {
 
   return (
     <>
-      <form onSubmit={searchMeals} className="text-center flex flex-col ">
+      <form onSubmit={searchMeals} className=" flex flex-col"> {/* my custom design */}
         <input
           type="text"
           placeholder="Search for meals..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          className="magnificent"
+          required
         />
-        <button type="submit" className="border-gray-800 border-4">
+        <button type="submit" className="bg-gradient-to-r from-gray-700 via-gray-800 to-black text-white text-base py-2 px-4 rounded-md border-none cursor-pointer transition-transform duration-300 ease-in-out hover:bg-gradient-to-br hover:from-green-600 hover:to-green-400 hover:scale-105">
           Search
         </button>
       </form>
       
       {/* for loading  */}
-
       {loading ? (
         <div className="text-center text-gray-700 text-lg font-medium animate-pulse">
           Loading menu...
@@ -83,9 +86,11 @@ function App() {
               {notFoundMessage}
             </div>
           ) : (
-            <ul className="meal">
-              {meal.flatMap((food, index) => (
-                <li key={index}>{food.name}</li>
+            <ul className="meal list-none p-0">
+              {meal.map((food, index) => (
+                <li key={index} className="bg-gray-800 text-center p-4 mb-2 rounded-md transition-colors duration-300 ease-in-out hover:bg-gray-700">
+                  <Link to={`/food/${food.id}`}>{food.name}</Link>
+                </li>
               ))}
             </ul>
           )}
@@ -95,4 +100,4 @@ function App() {
   );
 }
 
-export default App;
+export default Search;
