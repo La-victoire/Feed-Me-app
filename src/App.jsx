@@ -11,7 +11,7 @@ function Search() {
   useEffect(() => {
     const fetchMeal = async () => {
       try {
-        const res = await fetch("https://feedme-api.onrender.com/");
+        const res = await fetch("https:/api/");
         const data = await res.json();
         setMeal(data);
       } catch (error) {
@@ -33,7 +33,7 @@ function Search() {
     setNotFoundMessage("");
 
     fetch(
-      `https://feedme-api.onrender.com/meals/search/${encodeURIComponent(
+      `https:/api/meals/search/${encodeURIComponent(
         searchQuery
       )}`
     )

@@ -8,7 +8,7 @@ export const FoodProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://feedme-api.onrender.com/');
+        const response = await fetch('https:/api/');
         const data = await response.json();
         if (Array.isArray(data)) {
           setFood(data);
