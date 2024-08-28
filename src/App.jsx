@@ -11,7 +11,7 @@ function Search() {
   useEffect(() => {
     const fetchMeal = async () => {
       try {
-        const res = await fetch("https:/api/");
+        const res = await fetch("/api/");
         const data = await res.json();
         setMeal(data);
       } catch (error) {
@@ -33,7 +33,7 @@ function Search() {
     setNotFoundMessage("");
 
     fetch(
-      `https:/api/meals/search/${encodeURIComponent(
+      `/api/meals/search/${encodeURIComponent(
         searchQuery
       )}`
     )
