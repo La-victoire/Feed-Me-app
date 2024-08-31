@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { Link } from "react-router-dom"; // Import Link
+import { Link } from "react-router-dom"; 
 
 function Search() {
   const [meal, setMeal] = useState([]);
@@ -9,16 +9,7 @@ function Search() {
   const [notFoundMessage, setNotFoundMessage] = useState("");
 
   useEffect(() => {
-    const fetchMeal = async () => {
-      try {
-        const res = await fetch("/api/");
-        const data = await res.json();
-        setMeal(data);
-      } catch (error) {
-        console.log("error fetching data");
-      }
-    };
-    fetchMeal();
+   
   }, []);
 
   const searchMeals = (e) => {
@@ -32,30 +23,28 @@ function Search() {
     setLoading(true);
     setNotFoundMessage("");
 
-    fetch(
-      `/api/meals/search/${encodeURIComponent(
-        searchQuery
-      )}`
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setMeal(data);
-        setLoading(false);
+    const fetchMeal = async () => {
+      try {
+        const res = await fetch("/db.json");
+        const data = await res.json();
+        const filteredMeals = data.filter((food) => {
+          const name = food.name.toLowerCase();
+          const query = searchQuery.toLowerCase();
+          return name.includes(query);
+        });
 
-        if (data.length === 0) {
+        if (filteredMeals.length === 0) {
           setNotFoundMessage("Meal not available, try finding something else.");
+        } else {
+          setMeal(filteredMeals);
         }
-      })
-      .catch((error) => {
-        console.error("There was an error searching the menu!", error);
-        setNotFoundMessage("Meal not available, try finding something else.");
+      } catch (error) {
+        console.log("error fetching data");
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    fetchMeal();
   };
 
   return (
