@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Search() {
   const [meal, setMeal] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [notFoundMessage, setNotFoundMessage] = useState("");
 
@@ -49,16 +49,16 @@ function Search() {
 
   return (
     <>
-      <form onSubmit={searchMeals} className=" flex flex-col"> {/* my custom design */}
+      <form onSubmit={searchMeals} className=" flex flex-col justify-center items-center"> {/* my custom design */}
         <input
           type="text"
           placeholder="Search for meals..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="magnificent"
+          className="lg:w-96 pl-2 h-12 rounded-md text-black outline-none sm:w-64"
           required
         />
-        <button type="submit" className="bg-gradient-to-r from-gray-700 via-gray-800 to-black text-white text-base py-2 px-4 rounded-md border-none cursor-pointer transition-transform duration-300 ease-in-out hover:bg-gradient-to-br hover:from-green-600 hover:to-green-400 hover:scale-105">
+        <button type="submit" className=" mt-2 bg-gray-700 to-black text-white text-base py-2 px-4 rounded-md border-none cursor-pointer transition-transform duration-300 ease-in-out hover:bg-gradient-to-br hover:from-green-600 hover:to-green-400 hover:scale-105">
           Search
         </button>
       </form>

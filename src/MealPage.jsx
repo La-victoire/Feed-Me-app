@@ -13,7 +13,8 @@ const MealPage = ({ type }) => {
 
   return (
     <div className="max-w-[1640px] mx-auto p-4">
-      <h2 className="text-4xl font-bold text-white mb-8">{type}</h2>
+      <h2 className="text-4xl font-bold text-white ">{type}</h2>
+      <p className='text-sm text-white mb-4'>*Click on card to view full details</p>
       <div className="flex flex-wrap justify-center gap-5">
         {filteredFood.map((item) => (
            <div key={item.id} className="opacity-0 animate-fadeIn">
